@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@layer components {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  #root {
+    @apply flex flex-col;
+  }
+
+  main {
+    @apply grow;
+  }
+
+  .login-register-left-section {
+    @apply bg-[url(https://picsum.photos/1200)] bg-cover bg-center;
+  }
+
+  .main-container {
+    @apply max-w-5xl mx-auto;
+  }
+}
