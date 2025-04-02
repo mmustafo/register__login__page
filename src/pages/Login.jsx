@@ -33,7 +33,7 @@ function Login() {
                 Google
               </button>
             </div>
-            <p className="text-center opacity-75">
+            <p className="text-center opacity-75 text-white md:text-black">
               If you don't have an account
               <Link className="link link-primary" to="/register">
                 {" "}
