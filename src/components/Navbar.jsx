@@ -16,8 +16,6 @@ function Navbar() {
         </div>
         <div className="navbar-center">
           <ul className="flex gap-2">
-            <li className="btn btn-outline">about</li>
-            <li className="btn btn-outline">contact</li>
           </ul>
         </div>
         <div className="navbar-end">
