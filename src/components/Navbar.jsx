@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useLogout } from "../hooks/useLogout";
-
 function Navbar() {
   const { user } = useGlobalContext(); 
   const { logout, isPending } = useLogout();
@@ -13,8 +12,14 @@ function Navbar() {
           <Link className="btn btn-neutral" to="/">
             Logo
           </Link>
+          
         </div>
-        <div className="navbar-center"></div>
+        <div className="navbar-center">
+          <ul className="flex gap-2">
+            <li className="btn btn-outline">about</li>
+            <li className="btn btn-outline">contact</li>
+          </ul>
+        </div>
         <div className="navbar-end">
           {user ? (
             <div className="flex gap-3.5 items-center mr-[20px]">
