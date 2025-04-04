@@ -24,3 +24,11 @@
     @apply max-w-5xl mx-auto;
   }
 }
+
+.card:hover{
+  background: #00000017;
+}
+/* .card{
+  box-shadow: 200px red;
+} */
+

@@ -24,8 +24,8 @@ function Home() {
                 xush kelibsz 
             </h2>
 
-            <p>
-                Rasmingiz yomon chiqmadi degan umiddaman 
+            <p className="font-bold text-amber-950">
+                Shaxsiy saxifangizga xush kelibsz {user.displayName}
             </p>
           </div>
         </div>
