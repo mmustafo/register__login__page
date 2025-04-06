@@ -3,7 +3,7 @@ import { auth, db } from "../firebase/config"
 import { useState } from "react"
 import { useGlobalContext } from "./useGlobalContext"
 import toast from "react-hot-toast"
-import { doc, updateDoc } from "firebase/firestore"
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
 
 export const useLogout = () => {
   const { dispatch, user } = useGlobalContext()
@@ -17,14 +17,22 @@ export const useLogout = () => {
       }
 
       const userRef = doc(db, "users", user.uid)
-      await updateDoc(userRef, {
-        online: false,
-      })
+      const userDoc = await getDoc(userRef)
 
-     
+      if (userDoc.exists()) {
+        await updateDoc(userRef, {
+          online: false,
+        })
+      } else {
+        await setDoc(userRef, {
+          online: false,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        })
+      }
+
       await signOut(auth)
 
- 
       dispatch({ type: "LOGOUT" })
       toast.success("Kuningiz judayam motadil otsin!")
     } catch (error) {
