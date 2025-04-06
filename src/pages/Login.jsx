@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import { useLogin } from "../hooks/useLogin";
+import { useGoogleProvider } from "../hooks/useGoogleProvider";
+
 
 function Login() {
+  const {
+    data: _data,
+    googleProvider,
+    isPending: _isPending,
+  } = useGoogleProvider();
   const { data, isPending, login } = useLogin();
 
   function handleSubmit(e) {
@@ -13,13 +20,24 @@ function Login() {
     login(email, password);
   }
 
+  async function handleGoogleSignIn() {
+    try {
+      await googleProvider();
+    } catch (error) {
+      console.error("Google Sign-in error:", error);
+    }
+  }
+
   return (
     <section className="max-w-[1200px]">
       <div className="h-screen grid grid-cols-1 md:grid-cols-2">
         <div className="login-register-left-section hidden md:flex"></div>
         <div className="grid place-items-center login-register-left-section md:bg-none">
           <div className="absolute left-0 top-0 bottom-0 w-full bg-black opacity-50 z-10 md:hidden"></div>
-          <form onSubmit={handleSubmit} className="w-96 relative z-20 max-w-[386px]">
+          <form
+            onSubmit={handleSubmit}
+            className="w-96 relative z-20 max-w-[386px]"
+          >
             <h2 className="text-3xl text-center mb-5 font-bold text-white md:text-black">
               Login
             </h2>
@@ -29,8 +47,13 @@ function Login() {
               <button type="submit" className="btn btn-primary grow">
                 {isPending ? "Logging in..." : "Login"}
               </button>
-              <button type="button" className="btn btn-secondary grow">
-                Google
+              <button
+                onClick={handleGoogleSignIn}
+                type="button"
+                className="btn btn-secondary grow"
+                disabled={_isPending}
+              >
+                {_isPending ? "Loading..." : "Sign in with Google"}
               </button>
             </div>
             <p className="text-center opacity-75 text-white md:text-black">

@@ -1,26 +1,33 @@
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/config";
-import { useState } from "react";
-import { useGlobalContext } from "./useGlobalContext";
-import toast from "react-hot-toast";
+import { signOut } from "firebase/auth"
+import { auth, db } from "../firebase/config"
+import { useState } from "react"
+import { useGlobalContext } from "./useGlobalContext"
+import toast from "react-hot-toast"
+import { doc, updateDoc } from "firebase/firestore"
 
 export const useLogout = () => {
-  const { dispatch } = useGlobalContext(); // <-- Bu yerda chaqirish kerak
-  const [isPending, setIsPending] = useState(false);
+  const { dispatch, user } = useGlobalContext() 
+  const [isPending, setIsPending] = useState(false)
 
   const logout = async () => {
+    setIsPending(true)
     try {
-      setIsPending(true);
-      await signOut(auth);
-      dispatch({ type: "LOGOUT" });
-      toast.success("Kuningiz judayam motadil otsin!");
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    } finally {
-      setIsPending(false);
-    }
-  };
+      const userRef = doc(db, "users", user.uid)
+      await updateDoc(userRef, {
+        online: false,
+      })
 
-  return { logout, isPending };
-};
+      await signOut(auth)
+
+      dispatch({ type: "LOGOUT" })
+      toast.success("Kuningiz judayam motadil otsin!")
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    } finally {
+      setIsPending(false)
+    }
+  }
+
+  return { logout, isPending }
+}
