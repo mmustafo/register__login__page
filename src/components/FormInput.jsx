@@ -1,5 +1,6 @@
 import React from "react";
 
+
 function FormInput({ name, type, label }) {
   return (
     <fieldset className="fieldset max-w-[384px]">

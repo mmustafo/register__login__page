@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 import useCollaction from "../hooks/useCollaction";
 

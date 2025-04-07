@@ -6,7 +6,7 @@ function Navbar() {
   const { logout, isPending } = useLogout();
 
   return (
-    <header className="bg-base-200">
+    <header className="bg-amber-100">
       <div className="navbar main-container">
         <div className="navbar-start">
           <Link className="btn btn-neutral" to="/">
@@ -14,30 +14,22 @@ function Navbar() {
           </Link>
           
         </div>
-        <div className="navbar-center">
-          <ul className="flex gap-2">
-          </ul>
+        <div className="navbar-center flex gap-2 items-center">
+        <Link
+          to="/"
+          className="w-full text-center py-2 px-4 bg-amber-100 text-amber-700 rounded-lg font-medium hover:bg-amber-200 transition"
+        >
+           Home
+        </Link>
+        <Link
+          to="/Create"
+          className="w-full text-center py-2 px-4 bg-amber-100 text-amber-700 rounded-lg font-medium hover:bg-amber-200 transition"
+        >
+           Create
+        </Link>
         </div>
         <div className="navbar-end">
-          {user ? (
-            <div className="flex gap-3.5 items-center mr-[20px]">
-              <div className="avatar">
-                <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-                  <img
-                    src={user.photoURL}
-                    alt={`${user.displayName}'s Avatar`}
-                  />
-                </div>
-              </div>
-              <div>
-                <h2>Salom {user.displayName}</h2>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <h2>Loading...</h2>
-            </div>
-          )}
+         
 
           {!isPending ? (
             <button onClick={logout} className="btn btn-secondary btn-outline">
@@ -53,5 +45,5 @@ function Navbar() {
     </header>
   );
 }
-
+  
 export default Navbar;
