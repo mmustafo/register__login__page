@@ -1,8 +1,14 @@
-import { addDoc, collection, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useReducer } from "react";
 import toast from "react-hot-toast";
-
+import { db } from "../firebase/config";
 const initialState = {
   isPending: false,
   error: null,
@@ -22,7 +28,7 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-};  
+};
 
 export const useFirebase = (c) => {
   const [isCanceled, setIsCanceled] = useState(false);
@@ -32,17 +38,15 @@ export const useFirebase = (c) => {
       dispatch(action);
     }
   };
-  const addDocument = async () => {
+  const addDocument = async (data) => {
     try {
-      checkCanceled({ type: "IS_PENDING", payload: true });
+      checkCanceled({ type: "IS_PENDING" });
       const res = await addDoc(collection(db, c), data);
       checkCanceled({ type: "SUCCESS", payload: res });
-      toast.success("Success");
+      toast.success("Successfully added!");
     } catch (error) {
       checkCanceled({ type: "ERROR", payload: error.message });
       toast.error(error.message);
-    } finally {
-      checkCanceled({ type: "IS_PENDING", payload: false });
     }
   };
   const updateDocument = async (id, data) => {
@@ -60,17 +64,16 @@ export const useFirebase = (c) => {
     }
   };
   const deleteDocument = async (id) => {
-   
     try {
-        checkCanceled({ type: "IS_PENDING", payload: true });
-        await deleteDoc(doc(db, c, id));
-        toast.success("Success");
-      } catch (error) {
-        checkCanceled({ type: "ERROR", payload: error.message });
-        toast.error(error.message);
-      } finally {
-        checkCanceled({ type: "IS_PENDING", payload: false });
-      }
+      checkCanceled({ type: "IS_PENDING", payload: true });
+      await deleteDoc(doc(db, c, id));
+      toast.success("Success");
+    } catch (error) {
+      checkCanceled({ type: "ERROR", payload: error.message });
+      toast.error(error.message);
+    } finally {
+      checkCanceled({ type: "IS_PENDING", payload: false });
+    }
   };
 
   useEffect(() => {

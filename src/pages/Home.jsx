@@ -6,7 +6,6 @@ import useCollaction from "../hooks/useCollaction";
 function Home() {
   const { user } = useGlobalContext();
   const { data } = useCollaction("salomat");
-
   return (
     <div>
       <h1 className="text-center text-3xl mt-10 font-extrabold">
@@ -39,12 +38,34 @@ function Home() {
               className="bg-amber-300 max-w-[700px] rounded-2xl p-5 mb-6 mx-auto"
               key={d.id}
             >
+              <h1 className="text-center text-5xl font-bold mb-5 text-amber-800">
+                {d.title}
+              </h1>
               <img
-                src="https://static.wixstatic.com/media/183ce0_3a3bcf40ab8d4a1abeb6d62d30576bd1~mv2.jpg/v1/fill/w_800,h_533,al_c,q_85/183ce0_3a3bcf40ab8d4a1abeb6d62d30576bd1~mv2.jpg"
+                src={d.cookingimages}
                 alt="mastava"
                 className="rounded-xl w-full object-cover mb-4"
               />
-              <h2 className="text-2xl font-bold text-amber-800">{d.title} Haqida</h2>
+
+              
+              {d.ingredients && (
+                <div className="mt-4">
+                  <h3 className="text-xl font-semibold text-amber-800">
+                    {d.title} uchun keraklik mahsulotlar
+                  </h3>
+                  <ul className="list-disc pl-5 flex gap-4 mb-4">
+                    {d.ingredients.map((max, id) => (
+                      <h4 key={max} className="text-amber-800 ">
+                        {max}
+                      </h4>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <h2 className="text-2xl font-bold text-amber-800">
+                {d.title} Haqida
+              </h2>
               <p className="max-w-[500px] text-amber-800">{d.description}</p>
             </div>
           );
