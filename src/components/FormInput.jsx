@@ -4,7 +4,7 @@ import React from "react";
 function FormInput({ name, type, label }) {
   return (
     <fieldset className="fieldset max-w-[384px]">
-      <legend className="fieldset-legend text-white md:text-black">
+      <legend className="fieldset-legend text-black">
         {label}
       </legend>
       <input
